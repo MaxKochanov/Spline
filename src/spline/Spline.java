@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Spline {
 
-    public static int n = 60; // Количество узлов
+    public static int n = 60; // Количество узлов-1
     public static int pointsAmount = 350; // Количество точек для графика
     public static double[] x = new double[n + 1];
     public static double[] y = new double[n + 1];
