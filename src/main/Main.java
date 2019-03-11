@@ -18,6 +18,9 @@ public class Main {
             z[i] = i /(double)35;
         }
         double[] value = new double[pointsAmount];
+        double leftCondition = spline.getLeftCondition(x[0], x[1], x[2]);
+        double rightCondition = spline.getRightCondition(x[n-3], x[n-2], x[n-1], x[n], x[n]);
+
         double[] gamma = spline.findParameters(-testFunction(x[0]), -testFunction(x[n]));
         for (int i = 0; i < pointsAmount; i++) {
             for (int j = 0; j < n; j++) {
@@ -28,6 +31,7 @@ public class Main {
             }
         }
         dataWriter.spline(z, value);
+        dataWriter.errorSpline(z, value);
 
     }
 }

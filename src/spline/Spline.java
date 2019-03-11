@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class Spline {
 
-    public static int n = 60; // Количество узлов-1
+    public static int n = 10; // Количество узлов-1
     public static int pointsAmount = 350; // Количество точек для графика
     public static double[] x = new double[n + 1];
     public static double[] y = new double[n + 1];
@@ -15,14 +15,14 @@ public class Spline {
 
     private void initNodes() {
         Random random = new Random();
+        x[0] = 0;
+        y[0] = testFunction(x[0]);
         for (int i = 1; i < n; i++) {
             double eps = random.nextInt(10);
-            x[i] = i / (double) 6 + eps / 25;
+            x[i] = i + eps / 25;
             y[i] = testFunction(x[i]);
         }
-        x[0] = 0;
         x[n] = 10;
-        y[0] = testFunction(x[0]);
         y[n] = testFunction(x[n]);
     }
 
@@ -125,6 +125,22 @@ public class Spline {
                 + gamma[i] * (Math.pow((x[i + 1] - z), 3) - Math.pow((x[i + 1] - x[i]), 2) * (x[i + 1] - z)) /
                 (6 * (x[i + 1] - x[i])) + gamma[i + 1] * (Math.pow((z - x[i]), 3) - Math.pow((x[i + 1] - x[i]), 2) * (z - x[i])) /
                 (6 * (x[i + 1] - x[i]));
+    }
+
+    public double getLeftCondition(double x0, double x1, double x2) { // optional condition to left side by condition of problem
+        return 2 * (testFunction(x0) / ((x2 - x1) * (x2 - x0)) - testFunction(x1) / ((x1 - x0) * (x2 - x1))
+                + testFunction(x2) / ((x2 - x1) * (x2 - x0)));
+    }
+
+    public double getRightCondition(double x1, double x2, double x3, double x4, double x) {
+        return (testFunction(x1) * (6 * x - 2 * x3 - 2 * x2 - 2 * x4))
+                / ((x1 - x2) * (x1 - x3) * (x1 - x4))
+                + (testFunction(x2) * (6 * x - 2 * x3 - 2 * x1 - 2 * x4))
+                / ((x2 - x1) * (x2 - x3) * (x2 - x4))
+                + (testFunction(x3) * (6 * x - 2 * x1 - 2 * x2 - 2 * x4))
+                / ((x3 - x2) * (x3 - x1) * (x3 - x4))
+                + (testFunction(x4) * (6 * x - 2 * x3 - 2 * x2 - 2 * x1))
+                / ((x4 - x2) * (x4 - x3) * (x4 - x1));
     }
 
 }

@@ -30,5 +30,17 @@ public class DataWriter {
         }
     }
 
+    public void errorSpline(double[] x, double[] y) {
+        try {
+            FileWriter file = new FileWriter("E:\\Java_projects\\Spline\\src\\graphics\\dataError");
+            for (int i = 0; i < Spline.pointsAmount; i++) {
+                file.write(x[i] + "                           " + 20 * Math.abs((Spline.testFunction(x[i]) - y[i])) + "\n");
+                file.flush();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
